@@ -37,7 +37,23 @@ def main():
                     else:
                         print(f"{command}: not found")
         else:
-            print(f"{cmd}: command not found")
+            found = False
+            path_env = os.environ.get("PATH", "")
+            for dir in path_env.split(os.pathsep):
+                if dir == "":
+                    dir = "."
+                full_path = os.path.join(dir, cmd)
+                if os.path.isfile(full_path) and os.access(full_path, os.X_OK):
+                    found = True
+            
+            if found: 
+                os.execv(full_path, [cmd] + args)
+                print(f"Program was passed {len(args) + 1} args.")
+                print(f"Arg #0: {cmd}")
+                for i, arg in enumerate(args):
+                    print(f"Arg #{i + 1} = {arg}")
+            else:
+                print(f"{cmd}: command not found")
 
     return 0
 
