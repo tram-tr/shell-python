@@ -3,7 +3,8 @@ import sys
 
 def main():
     sys.stdout.write("$ ")
-    pass
+    cmd = input()
+    print(f"{cmd}: command not found")
 
 
 if __name__ == "__main__":
