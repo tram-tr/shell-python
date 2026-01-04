@@ -46,7 +46,7 @@ def main():
                 if os.path.isfile(full_path) and os.access(full_path, os.X_OK):
                     found = True
                     break
-                
+
             if found: 
                 os.execv(full_path, [cmd] + args)
                 print(f"Program was passed {len(args) + 1} args (including program name).")
@@ -55,8 +55,6 @@ def main():
                     print(f"Arg #{i + 1} = {arg}")
             else:
                 print(f"{cmd}: command not found")
-
-    return 0
 
 if __name__ == "__main__":
     main()
