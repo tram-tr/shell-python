@@ -62,10 +62,11 @@ def main():
                     os.execv(full_path, [cmd] + args)
                 else:
                     os.waitpid(pid, 0)
-                print(f"Program was passed {len(args) + 1} args (including program name).")
-                print(f"Arg #0: {cmd}")
-                for i, arg in enumerate(args):
-                    print(f"Arg #{i + 1} = {arg}")
+                    
+                # print(f"Program was passed {len(args) + 1} args (including program name).")
+                # print(f"Arg #0: {cmd}")
+                # for i, arg in enumerate(args):
+                #     print(f"Arg #{i + 1} = {arg}")
             else:
                 print(f"{cmd}: command not found")
 
