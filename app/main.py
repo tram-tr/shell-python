@@ -5,8 +5,10 @@ def main():
     shell_cmds = ["echo", "type", "exit"]
     while True:
         sys.stdout.write("$ ")
-        str = input()
-        cmd, args = str.split(" ")[0], str.split(" ")[1:]
+        line = input()
+        cmd, _, rest = line.partition(" ")
+        args = rest.split() if rest else []
+
         if cmd == "exit":
             break
         elif cmd == "echo":
@@ -47,14 +49,27 @@ def main():
                     found = True
                     break
 
-            if found: 
-                os.execv(full_path, [cmd] + args)
+            if found:
+                # execute the command
+                # a real shell would
+                # 1. fork a new process
+                # 2. in the child process, replace the process image with the command -> exec
+                # 3. in the parent process, wait for the child to finish
+                # 4. print the next prompt
+                # so shell must not die when executing an external command
+                pid = os.fork()
+                if pid == 0:
+                    os.execv(full_path, [cmd] + args)
+                else:
+                    os.waitpid(pid, 0)
                 print(f"Program was passed {len(args) + 1} args (including program name).")
                 print(f"Arg #0: {cmd}")
                 for i, arg in enumerate(args):
                     print(f"Arg #{i + 1} = {arg}")
             else:
                 print(f"{cmd}: command not found")
+
+    return 0
 
 if __name__ == "__main__":
     main()
