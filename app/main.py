@@ -45,10 +45,11 @@ def main():
                 full_path = os.path.join(dir, cmd)
                 if os.path.isfile(full_path) and os.access(full_path, os.X_OK):
                     found = True
-            
+                    break
+                
             if found: 
                 os.execv(full_path, [cmd] + args)
-                print(f"Program was passed {len(args) + 1} args.")
+                print(f"Program was passed {len(args) + 1} args (including program name).")
                 print(f"Arg #0: {cmd}")
                 for i, arg in enumerate(args):
                     print(f"Arg #{i + 1} = {arg}")
