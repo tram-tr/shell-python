@@ -1,19 +1,32 @@
 import sys
 import os
+import shlex
 
 def main():
     shell_cmds = ["echo", "type", "exit", "pwd", "cd"]
+
     while True:
-        sys.stdout.write("$ ")
-        line = input()
-        cmd, _, rest = line.partition(" ")
-        args = rest.split() if rest else []
+        try:
+            sys.stdout.write("$ ")
+            line = input()
+        except EOFError:
+            break
+
+        try:
+            tokens = shlex.split(line)
+        except ValueError as e:
+            print(f"Error parsing command: {e}")
+            continue
+        
+        if not tokens:
+            continue
+
+        cmd = tokens[0]
+        args = tokens[1:]
 
         if cmd == "exit":
             break
         elif cmd == "echo":
-            if len(args) == 0:
-                print()
             print(" ".join(args))
         elif cmd == "pwd":
             print(os.getcwd())
