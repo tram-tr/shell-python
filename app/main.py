@@ -2,7 +2,7 @@ import sys
 import os
 
 def main():
-    shell_cmds = ["echo", "type", "exit"]
+    shell_cmds = ["echo", "type", "exit", "pwd"]
     while True:
         sys.stdout.write("$ ")
         line = input()
@@ -15,6 +15,8 @@ def main():
             if len(args) == 0:
                 print()
             print(" ".join(args))
+        elif cmd == "pwd":
+            print(os.getcwd())
         elif cmd == "type":
             if len(args) != 1:
                 print("type: usage: type COMMAND")
