@@ -2,7 +2,7 @@ import sys
 import os
 
 def main():
-    shell_cmds = ["echo", "type", "exit", "pwd"]
+    shell_cmds = ["echo", "type", "exit", "pwd", "cd"]
     while True:
         sys.stdout.write("$ ")
         line = input()
@@ -17,6 +17,19 @@ def main():
             print(" ".join(args))
         elif cmd == "pwd":
             print(os.getcwd())
+        elif cmd == "cd":
+            if len(args) != 1:
+                print("cd: usage: cd DIRECTORY")
+            else:
+                dir = args[0]
+                try:
+                    os.chdir(dir)
+                except FileNotFoundError:
+                    print(f"cd: No such file or directory: {dir}")
+                except NotADirectoryError:
+                    print(f"cd: Not a directory: {dir}")
+                except PermissionError:
+                    print(f"cd: Permission denied: {dir}")
         elif cmd == "type":
             if len(args) != 1:
                 print("type: usage: type COMMAND")
