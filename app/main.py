@@ -22,6 +22,8 @@ def main():
                 print("cd: usage: cd DIRECTORY")
             else:
                 dir = args[0]
+                if dir == "~":
+                    dir = os.path.expanduser("~")
                 try:
                     os.chdir(dir)
                 except FileNotFoundError:
