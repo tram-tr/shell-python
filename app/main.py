@@ -25,11 +25,11 @@ def main():
                 try:
                     os.chdir(dir)
                 except FileNotFoundError:
-                    print(f"cd: No such file or directory: {dir}")
+                    print(f"cd: {dir}: No such file or directory")
                 except NotADirectoryError:
-                    print(f"cd: Not a directory: {dir}")
+                    print(f"cd: {dir}: Not a directory")
                 except PermissionError:
-                    print(f"cd: Permission denied: {dir}")
+                    print(f"cd: {dir}: Permission denied")
         elif cmd == "type":
             if len(args) != 1:
                 print("type: usage: type COMMAND")
